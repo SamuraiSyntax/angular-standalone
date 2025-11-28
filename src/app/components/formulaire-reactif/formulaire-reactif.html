@@ -1,0 +1,10 @@
+<h2>Formulaire réactif (Sans FormBuilder)</h2>
+<div class="form-group">
+    <label class="form-label"  for="nom">Nom</label>
+    <input class="form-control" type="text" id="nom" [formControl]="nom">
+</div>
+<div class="form-group">
+    <button class="btn btn-primary" (click)="afficher()">
+        Afficher
+    </button>
+</div>

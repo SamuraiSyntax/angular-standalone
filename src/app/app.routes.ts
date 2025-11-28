@@ -10,6 +10,9 @@ import { StagiereComponent } from './components/stagiere/stagiere';
 import { CalculComponent } from './components/calcul/calcul';
 import { Tableau } from './components/tableau/tableau';
 import { NotFoundComponent } from './components/not-found/not-found';
+import { FormulaireSimpleComponent } from './components/formulaire-simple/formulaire-simple';
+import { CalculetteComponent } from './components/calculette/calculette';
+import { FormulaireReactifComponent } from './components/formulaire-reactif/formulaire-reactif';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Accueil' },
@@ -22,6 +25,9 @@ export const routes: Routes = [
   { path: 'subject', component: SubjectComponent, title: 'Subject' },
   { path: 'computed', component: ComputedComponent, title: 'Computed' },
   { path: 'chat', component: ChatComponent, title: 'Chat' },
+  { path: 'formulaire-simple', component: FormulaireSimpleComponent, title: 'Formulaire Simple' },
+  { path: 'formulaire-reactif', component: FormulaireReactifComponent, title: 'Formulaire Reactif' },
+  { path: 'calculette', component: CalculetteComponent, title: 'Calculette' },
   { path: 'about', component: AboutComponent, title: 'À propos' },
   { path: 'not-found', component: NotFoundComponent, title: 'Page non trouvée' },
   { path: '**', redirectTo: '/not-found' },

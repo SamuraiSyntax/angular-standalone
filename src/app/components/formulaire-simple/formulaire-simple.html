@@ -1,0 +1,81 @@
+<h2>Template-driven forms</h2>
+
+<form (ngSubmit)="onSubmit(formulaire)" #formulaire="ngForm">
+  <div class="form-group mb-3 has-validation">
+    <label class="form-label" for="nom">Nom</label>
+    <input
+      class="form-control {{ (nom.invalid && nom.touched && nom.pristine) || (nom.invalid && nom.touched && nom.dirty) ? 'is-invalid' : '' }} {{
+        nom.valid && nom.dirty ? 'is-valid' : ''
+      }}"
+      type="text"
+      id="nom"
+      [(ngModel)]="personne.nom"
+      name="nom"
+      #nom="ngModel"
+      required
+    />
+    @if (nom.invalid && nom.touched && nom.pristine || nom.invalid && nom.touched && nom.dirty) {
+    <span class="text-danger"> Ce champ est obligatoire </span>
+    }
+  </div>
+
+  <div class="form-group mb-3 has-validation">
+    <label class="form-label" for="prenom">Prénom</label>
+    <input
+      class="form-control {{
+        (prenom.invalid && prenom.touched && prenom.pristine) || (prenom.invalid && prenom.touched && prenom.dirty) ? 'is-invalid' : ''
+      }} {{ prenom.valid && prenom.dirty ? 'is-valid' : '' }}"
+      type="text"
+      id="prenom"
+      [(ngModel)]="personne.prenom"
+      name="prenom"
+      #prenom="ngModel"
+      required
+    />
+    @if (prenom.invalid && prenom.touched && prenom.pristine || prenom.invalid && prenom.touched && prenom.dirty) {
+    <span class="text-danger"> Ce champ est obligatoire </span>
+    }
+  </div>
+
+  <div class="form-group mb-3 has-validation">
+    <label class="form-label" for="age">Âge</label>
+    <input
+      class="form-control {{ (age.invalid && age.touched && age.pristine) || (age.invalid && age.touched && age.dirty) ? 'is-invalid' : '' }} {{
+        age.valid && age.dirty ? 'is-valid' : ''
+      }}"
+      type="number"
+      id="age"
+      [(ngModel)]="personne.age"
+      name="age"
+      max="120"
+      #age="ngModel"
+      required
+    />
+    @if (age.invalid && age.touched && age.pristine || age.invalid && age.touched && age.dirty) {
+    <span class="text-danger"> Ce champ est obligatoire </span>
+    }
+  </div>
+
+  @if (formulaire.valid) {
+  <button type="submit" class="btn btn-primary" [disabled]="formulaire.invalid">Soumettre</button>
+  } @if (formulaire.submitted) {
+  <p class="text-success">Le formulaire a été soumis</p>
+  } @if (personnes.length > 0) {
+  <div class="card mt-3">
+    <div class="card-header px-3 py-2">
+      <h3 class="text-primary mb-0">Liste des personnes</h3>
+    </div>
+    <div class="card-body p-0">
+      <ul class="list-group list-group-flush">
+        @for (personne of personnes; track personne) {
+        <li class="list-group-item list-group-item-action">
+          {{ personne.nom }} {{ personne.prenom }} - {{ personne.age }} ans
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+  } @else {
+  <p class="text-muted">Aucune personne n'a été ajoutée</p>
+  }
+</form>

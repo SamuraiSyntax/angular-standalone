@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import Stagiaire from '../../classes/stagiere';
 import { CommonModule } from '@angular/common';
+import { GetCharPipe } from '../../pipes/get-char-pipe';
+import { EvenValuePipe } from '../../pipes/even-value-pipe';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-about',
-  imports: [CommonModule],
+  imports: [CommonModule, GetCharPipe, EvenValuePipe, RouterModule],
   templateUrl: './about.html',
   styleUrl: './about.css',
 })
@@ -29,6 +32,15 @@ export class AboutComponent {
   };
   moyennes: number[] = [18, 5, 11, 15];
   currentRoute: string = '';
+  lastname = 'Mitroglou';
+  firstname = 'John';
+  codePostal = '31000';
+  ville = 'Toulouse';
+  aujourdhui = new Date();
+  
+  constructor(private router: Router) {
+    this.currentRoute = this.router.url;
+  }
 
   afficherBonjour(): string {
     return 'Bonjour!';
@@ -43,5 +55,16 @@ export class AboutComponent {
   afficherTexte(event: Event) {
     console.log((event as InputEvent).data);
     console.log((event.target as HTMLInputElement).value);
+  }
+  goToStagiaire() {
+    this.router.navigate(['/stagiaire', this.lastname, this.firstname]);
+  }
+  goToAdresse() {
+    this.router.navigate(['/adresse'], {
+      queryParams: {
+        cp: this.codePostal,
+        ville: this.ville,
+      },
+    });
   }
 }

@@ -1,0 +1,96 @@
+<div class="container mt-4">
+  <h2>Calculatrice</h2>
+  <form #calculetteForm="ngForm" class="form-group">
+    <div class="form-group mb-3 has-validation">
+      <label for="nombre1" class="form-label">Nombre 1</label>
+      <input
+        type="number"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isInvalid(nombre1Input), 'is-valid': isValid(nombre1Input) }"
+        id="nombre1"
+        [(ngModel)]="calculette.nombre1"
+        #nombre1Input="ngModel"
+        name="nombre1"
+        required
+      />
+      @if (isInvalid(nombre1Input)) {
+      <span class="text-danger"> Ce champ est obligatoire </span>
+      }
+    </div>
+    <div class="form-group mb-3 has-validation">
+      <label for="nombre2" class="form-label">Nombre 2</label>
+      <input
+        type="number"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isInvalid(nombre2Input), 'is-valid': isValid(nombre2Input) }"
+        id="nombre2"
+        [(ngModel)]="calculette.nombre2"
+        #nombre2Input="ngModel"
+        name="nombre2"
+        required
+      />
+      @if (isInvalid(nombre2Input)) {
+      <span class="text-danger"> Ce champ est obligatoire </span>
+      }
+    </div>
+
+    @if (calculetteForm.valid) {
+    <div class="d-flex justify-content-between gap-2">
+      <button
+        class="btn btn-primary flex-fill d-flex align-items-center justify-content-center"
+        (click)="onSubmit(calculetteForm, 'plus')"
+        [disabled]="calculetteForm.invalid"
+      >
+        +
+      </button>
+      <button
+        class="btn btn-primary flex-fill d-flex align-items-center justify-content-center"
+        (click)="onSubmit(calculetteForm, 'moins')"
+        [disabled]="calculetteForm.invalid"
+      >
+        -
+      </button>
+      <button
+        class="btn btn-primary flex-fill d-flex align-items-center justify-content-center"
+        (click)="onSubmit(calculetteForm, 'fois')"
+        [disabled]="calculetteForm.invalid"
+      >
+        *
+      </button>
+      <button
+        class="btn btn-primary flex-fill d-flex align-items-center justify-content-center"
+        (click)="onSubmit(calculetteForm, 'div')"
+        [disabled]="calculetteForm.invalid"
+      >
+        /
+      </button>
+    </div>
+    } @if (calculetteForm.valid && resultat !== undefined) {
+    <div class="alert alert-info mt-3"><strong>Résultat :</strong> {{ resultat }}</div>
+    } @if (resultats.length > 0) {
+    <h3>Historique des calculs</h3>
+    <ul class="list-group">
+      @for (result of resultats; track result) {
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center gap-2"
+        [ngClass]="{
+          'list-group-item-danger': result.isError,
+          'list-group-item-info': result.isInfo
+        }"
+      >
+        {{ result.displayString }}
+        @if (result.isInfo) {
+        <span class="badge rounded-pill text-bg-info">{{ result.isInfoMsg }}</span>
+        }
+        @if (result.isError) {
+        <span class="badge rounded-pill text-bg-danger">{{ result.isErrorMsg }}</span>
+        }
+        @if (!result.isError && !result.isInfo) {
+        <span class="badge rounded-pill text-bg-success">Success</span>
+        }
+      </li>
+      }
+    </ul>
+    }
+  </form>
+</div>

@@ -180,3 +180,45 @@
   <li [ngClass]="parite">{{ num }} est {{ parite }}</li>
   }
 </ul>
+
+<h2>Liens avec paramètres</h2>
+<h3>ParamMap</h3>
+<p>
+    <a [routerLink]="['/stagiaire', lastname, firstname]">
+        Apprendre plus sur Mitroglou
+    </a>
+</p>
+<h3>QueryParamMap</h3>
+<p>
+    <a routerLink="/adresse" [queryParams]="{cp: codePostal, ville}">
+        Visitez Toulouse
+    </a>
+</p>
+<h2>Redirection depuis .ts</h2>
+<div>
+    <button (click)="goToStagiaire()" class="btn">
+        Aller au composant stagiaire
+    </button>
+</div>
+<div>
+    <button (click)="goToAdresse()" class="btn">
+        Aller au composant adresse
+    </button>
+</div>
+<h2>Pipes (CommonModule)</h2>
+<p>{{ title | uppercase }}</p>
+<p>{{ aujourdhui | date:'d MMM y' }}</p>
+<p>{{ aujourdhui | date:'d MMM y' | uppercase }}</p>
+<p>{{ title | getchar }}</p>
+<p>{{ title | getchar:2 }}</p>
+
+<h2>Pipe personnalisé : EvenValuePipe</h2>
+<p>Nombres originaux : {{ numbers | json }}</p>
+<p>Nombres pairs : {{ numbers | evenValue | json }}</p>
+
+<p>Afficher seulement les nombres pairs dans une liste :</p>
+<ul>
+  @for (num of numbers | evenValue; track num) {
+  <li>{{ num }}</li>
+  }
+</ul>
