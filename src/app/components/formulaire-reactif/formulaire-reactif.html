@@ -1,10 +1,99 @@
-<h2>Formulaire réactif (Sans FormBuilder)</h2>
-<div class="form-group">
-    <label class="form-label"  for="nom">Nom</label>
-    <input class="form-control" type="text" id="nom" [formControl]="nom">
-</div>
-<div class="form-group">
-    <button class="btn btn-primary" (click)="afficher()">
-        Afficher
-    </button>
+<div class="container my-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4 text-center">Formulaire réactif (Sans FormBuilder)</h2>
+      <form [formGroup]="personneForm" (ngSubmit)="afficher()" class="needs-validation" novalidate>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold text-muted" for="nom">Nom</label>
+            <input
+              class="form-control form-control-lg rounded-pill"
+              type="text"
+              id="nom"
+              formControlName="nom"
+              placeholder="Dupont"
+              [class.is-invalid]="nom.invalid && nom.touched"
+            />
+            @if (nom.errors) {
+                @if (nom.errors['required']) {
+                <div class="invalid-feedback">Ce champ est obligatoire</div>
+              } @else {
+                <div class="invalid-feedback">{{ nom.errors['majuscule'] }}</div>
+              }
+            }
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold text-muted" for="prenom">Prénom</label>
+            <input
+              class="form-control form-control-lg rounded-pill"
+              type="text"
+              id="prenom"
+              formControlName="prenom"
+              placeholder="Jean"
+              [class.is-invalid]="prenom.invalid && prenom.touched"
+            />
+            @if (prenom.errors) {   
+              @if (prenom.errors['required']) {
+                <div class="invalid-feedback">Ce champ est obligatoire</div>
+              } @else if (prenom.errors['pattern']) {
+                <div class="invalid-feedback">Le prénom doit commencer par une lettre majuscule et ne doit contenir que des lettres</div>
+              }
+            }
+          </div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-md-4">
+            <label class="form-label fw-semibold text-muted" for="age">Âge</label>
+            <input
+              class="form-control form-control-lg rounded-pill"
+              type="number"
+              id="age"
+              formControlName="age"
+              placeholder="25"
+              min="0"
+              [class.is-invalid]="age.invalid && age.touched"
+            />
+            @if (age.errors) {
+              @if (age.errors['required']) {
+                <div class="invalid-feedback">Ce champ est obligatoire</div>
+              } @else {
+                <div class="invalid-feedback">{{ age.errors['min'] }}</div>
+              }
+            }
+          </div>
+          <div class="col-md-8 d-flex align-items-end justify-content-end">
+            <button
+              class="btn btn-primary btn-lg shadow-sm flex-fill"  
+              type="submit"
+              [disabled]="personneForm.invalid"
+            >
+              <i class="bi bi-plus-circle me-2"></i>Ajouter
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-10 col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3 class="mb-3">Liste des personnes</h3>
+          @if(personnes.length > 0) {
+          <ul class="list-group list-group-flush">
+            @for (personne of personnes; track $index) {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>{{ personne.prenom }} {{ personne.nom }}</span>
+              <span class="badge bg-secondary rounded-pill">{{ personne.age }} ans</span>
+            </li>
+            }
+          </ul>
+          } @else {
+          <div class="alert alert-info mb-0">Aucune personne n'a été enregistrée.</div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
