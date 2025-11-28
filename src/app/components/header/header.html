@@ -1,0 +1,19 @@
+<nav class="container-fluid d-flex justify-content-center bg-body-tertiary p-2">
+  <a
+    class="d-flex align-items-center justify-content-between gap-2 px-1 text-decoration-none text-{{
+      themeService.isDarkTheme() ? 'light' : 'dark'
+    }}"
+    href="/"
+  >
+    <h1 class="fs-4 m-0">{{ title.toUpperCase() }}</h1>
+    <i class="fa-brands fa-angular text-danger fs-4"></i>
+  </a>
+  <button
+    class="position-fixed top-0 end-0 me-2 mt-2 float-end btn btn-primary p-2 d-flex align-items-center"
+    (click)="toggleTheme()"
+  >
+    <span class="material-symbols-outlined fs-4">{{
+      themeService.isDarkTheme() ? 'light_mode' : 'mode_night'
+    }}</span>
+  </button>
+</nav>

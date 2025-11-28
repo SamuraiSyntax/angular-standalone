@@ -1,0 +1,32 @@
+<!-- src/app/components/chat/chat.component.html -->
+<div class="card shadow-sm">
+  <!-- Utilisez 'light' ou 'dark' ici -->
+  <div class="card-header">
+    <h2 class="h5 mb-0">Chat Room - {{ currentUser }}</h2>
+  </div>
+
+  <div
+    id="chat-messages-container"
+    class="card-body chat-messages overflow-auto"
+    style="height: 400px"
+  >
+    <div *ngFor="let message of messages" class="d-flex mb-2">
+      <div class="me-auto">
+        <span class="fw-bold text-primary">{{ message.sender }}:</span>
+        <span class="ms-1">{{ message.message }}</span>
+      </div>
+      <small class="text-muted">({{ message.timestamp | date : 'shortTime' }})</small>
+    </div>
+  </div>
+
+  <div class="card-footer d-flex p-3">
+    <input
+      type="text"
+      class="form-control me-2"
+      [(ngModel)]="newMessage"
+      (keyup.enter)="sendMessage()"
+      placeholder="Tapez votre message..."
+    />
+    <button class="btn btn-success" (click)="sendMessage()">Envoyer</button>
+  </div>
+</div>

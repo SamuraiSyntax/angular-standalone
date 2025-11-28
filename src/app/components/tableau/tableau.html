@@ -1,0 +1,7 @@
+<p class="text-center">Nombre actuel : {{ nombre }}</p>
+
+<div class="d-flex justify-content-center gap-2">
+  <button class="btn btn-outline-{{ themeService.isDarkTheme() ? 'light' : 'dark' }}" (click)="precedent()">Précédent</button>
+  <span class="fs-4">{{ indice }}</span>
+  <button class="btn btn-outline-{{ themeService.isDarkTheme() ? 'light' : 'dark' }}" (click)="suivant()">Suivant</button>
+</div>

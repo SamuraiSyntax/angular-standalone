@@ -1,0 +1,19 @@
+@if (operation && result !== '') {
+<p>
+  {{ value1 }}
+  {{
+    operation === 'plus'
+      ? '+'
+      : operation === 'moins'
+      ? '-'
+      : operation === 'fois'
+      ? '*'
+      : operation === 'div'
+      ? '/'
+      : ''
+  }}
+  {{ value2 }} = {{ result }}
+</p>
+} @if (!operation || result === '') {
+<p>Veuillez entrer une opération et deux nombres (ex: /calcul/plus?value1=2&value2=5)</p>
+}

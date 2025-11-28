@@ -1,0 +1,182 @@
+<h2>Interpolation</h2>
+<h3>Interpoler un objet</h3>
+<p>Objet stagiaire: {{ stagiaires[0] | json }}</p>
+<ul>
+  <li>Numéro: {{ stagiaires[0].num }}</li>
+  <li>Nom: {{ stagiaires[0].nom }}</li>
+  <li>Prénom: {{ stagiaires[0].prenom }}</li>
+</ul>
+<h3>Interpoler un tableau</h3>
+<p>Tableau stagiaires: {{ stagiaires | json }}</p>
+<ul>
+  @for (stagiaire of stagiaires; track stagiaire.num) {
+  <li>
+    {{ stagiaire.num }} - {{ stagiaire.nom }} {{ stagiaire.prenom ?? '"Prénom non renseigné"' }}
+  </li>
+  } @empty {
+  <li>Aucun stagiaire</li>
+  }
+</ul>
+<h3>Interpoler une méthode (déconseillé)</h3>
+<p>
+  {{ afficherBonjour() }}
+</p>
+<h2>Property binding</h2>
+<p [textContent]="title"></p>
+<p>{{ title }}</p>
+<h3>Event binding</h3>
+<button (click)="alertBonjour()">Dire bonjour</button>
+<h3>Toggle buttons</h3>
+<div class="row">
+  <button [disabled]="!isFirstButtonActive" (click)="toggleButtons()">Bouton 1</button>
+  <button [disabled]="isFirstButtonActive" (click)="toggleButtons()">Bouton 2</button>
+</div>
+<h4>L'objet Event</h4>
+<div class="col">
+  <label for="texte">Votre texte</label>
+  <input type="text" id="texte" (input)="afficherTexte($event)" />
+</div>
+<h2>Control flow syntax (CFS)</h2>
+<h3>Boucle for</h3>
+<ul>
+  @for (item of stagiaires; let i = $index; track i) {
+  <li>{{ $first }} : {{ $last }} : {{ $even }} : {{ $odd }} : {{ i }} : {{ item }}</li>
+  } @empty {
+  <li>Aucun stagiaire</li>
+  }
+</ul>
+<ul>
+  @for (item of numbers; let i = $index; track i) {
+  <li>{{ $first }} : {{ $last }} : {{ $even }} : {{ $odd }} : {{ i }} : {{ item }}</li>
+  } @empty {
+  <li>Aucun nombre</li>
+  }
+</ul>
+<h3>Afficher nom et prenom de chaque stagiaires dans une liste</h3>
+<p>Actuellement {{ stagiaires.length }} stagiaires sont inscrits.</p>
+<ul>
+  @for (stagiaire of stagiaires; track stagiaire.num) {
+  <li>{{ stagiaire.nom }} {{ stagiaire.prenom ?? '"Prénom non renseigné"' }}</li>
+  } @empty {
+  <li>Aucun stagiaire</li>
+  }
+</ul>
+<ul>
+  @for (elt of stagiaire | keyvalue; track $index) {
+  <li>{{ elt.key }} {{ elt.value }}</li>
+  }
+</ul>
+<h3>Condition avec if</h3>
+@if (numbers[0] % 2 == 0) {
+<p>{{ numbers[0] }} est pair</p>
+} @if (numbers[1] % 2 == 0) {
+<p>{{ numbers[1] }} est pair</p>
+} @else {
+<p>{{ numbers[1] }} est impair</p>
+}
+<h3>Afficher tout les elements du tableau et leur parité dans une liste</h3>
+<ul>
+  @for (num of numbers; track num) { @if (num % 2 == 0) {
+  <li>{{ num }} est pair</li>
+  } @else {
+  <li>{{ num }} est impair</li>
+  } }
+</ul>
+<p>En mieux</p>
+<ul>
+  @for (num of numbers; track num) {
+  <li>{{ num }} est {{ num % 2 == 0 ? 'pair' : 'impair' }}</li>
+  }
+</ul>
+<h2>Résultats des moyennes :</h2>
+<ul>
+  @for (moyenne of moyennes; track $index) {
+  <li>
+    Moyenne : {{ moyenne }} - @if (moyenne < 10) {
+    <span>Échec</span>
+    } @else if (moyenne < 13) {
+    <span>Moyen</span>
+    } @else if (moyenne < 16) {
+    <span>Bien</span>
+    } @else {
+    <span>Très bien</span>
+    }
+  </li>
+  }
+</ul>
+
+<h2>version inline :</h2>
+<ul>
+  @for (moyenne of moyennes; track $index) {
+  <li>
+    Moyenne : {{ moyenne }} - @if (moyenne >= 0 && moyenne < 10) {
+    <span>Échec</span>
+    } @else if (moyenne >= 10 && moyenne < 13) {
+    <span>Moyen</span>
+    } @else if (moyenne >= 13 && moyenne < 16) {
+    <span>Bien</span>
+    } @else {
+    <span>Très bien</span>
+    }
+  </li>
+  }
+</ul>
+
+<h3>Condition avec switch</h3>
+<ul>
+  @for (n of numbers; track $index) {
+  <li>
+    {{ n }}
+    @switch (n) { @case (1) { un } @case (2) { deux } @case (3) { trois } @case (4) { quatre }
+    @default { autre } }
+  </li>
+  }
+</ul>
+
+<h3>Exemple avec les directives structurelles de CommonModule</h3>
+<ul>
+  <li *ngFor="let elt of numbers">
+    {{ elt }}
+  </li>
+</ul>
+<h3>ngStyle</h3>
+<p [ngStyle]="{ color: couleur, backgroundColor: bgCouleur, padding: padding }">
+  {{ title }}
+</p>
+<p [ngStyle]="style">
+  {{ title }}
+</p>
+<h3>ngClass</h3>
+<p [ngClass]="{ rouge: title.length > 10 }">
+  {{ title }}
+</p>
+<p [ngClass]="{ rouge: title.length > 10, bleu: title.length <= 10 }">
+  {{ title }}
+</p>
+<p [ngClass]="{ rouge: title.length > 10, bleu: title.length <= 10, gras: title.startsWith('a') }">
+  {{ title }}
+</p>
+<p [ngClass]="title.length > 0 ? 'rouge' : 'bleu'">
+  {{ title }}
+</p>
+
+<h3>
+  Afficher tout les elements du tableau et leur parité dans une liste avec ngClass avec des couleurs
+  différentes
+</h3>
+<ul>
+  @for (num of numbers; track num) {
+  <li [ngClass]="num % 2 == 0 ? 'pair' : 'impair'">
+    {{ num }} est {{ num % 2 == 0 ? 'pair' : 'impair' }}
+  </li>
+  }
+</ul>
+<h3>
+  Afficher tout les elements du tableau et leur parité dans une liste avec ngClass avec des couleurs
+  différentes en utilisant une variable
+</h3>
+<ul>
+  @for (num of numbers; track num) { @let parite = num % 2 == 0 ? 'pair' : 'impair';
+  <li [ngClass]="parite">{{ num }} est {{ parite }}</li>
+  }
+</ul>

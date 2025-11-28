@@ -1,0 +1,21 @@
+<h2>Les observables</h2>
+<ul>
+  @for (v of valeurs(); track $index) {
+  <li>{{ v }}</li>
+  } @empty {
+  <li>Liste vide</li>
+  }
+</ul>
+<p
+  class="state {{
+    state() === 'En attente'
+      ? 'en-attente'
+      : state() === 'En cours'
+      ? 'en-cours'
+      : state() === 'Terminé'
+      ? 'success'
+      : 'error'
+  }}"
+>
+  Etat : {{ state() }}
+</p>

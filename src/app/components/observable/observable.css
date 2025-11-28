@@ -1,0 +1,15 @@
+.state {
+  font-weight: bold;
+}
+.state.en-attente {
+  color: orange;
+}
+.state.en-cours {
+  color: blue;
+}
+.state.error {
+  color: red;
+}
+.state.success {
+  color: green;
+}
