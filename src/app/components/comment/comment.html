@@ -1,0 +1,138 @@
+<h2 class="text-center">Formulaire de Commentaires</h2>
+<form [formGroup]="commentForm" (ngSubmit)="afficher()">
+  <div class="d-flex flex-column align-items-center gap-4 mx-0">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title text-nowrap">Informations Personnelles</h5>
+        <div class="mb-3">
+          <label class="form-label" for="nom">Nom</label>
+          <input class="form-control" type="text" id="nom" formControlName="nom" />
+          @if (nom.errors) { @if (nom.errors['required']) {
+          <span class="text-danger">Ce champ est obligatoire</span>
+          } @else if (nom.errors['majuscule']) {
+          <span class="text-danger">{{ nom.errors['majuscule'] }}</span>
+          } }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="prenom">Prénom</label>
+          <input class="form-control" type="text" id="prenom" formControlName="prenom" />
+          @if (prenom.errors) { @if (prenom.errors['required']) {
+          <span class="text-danger">Ce champ est obligatoire</span>
+          } @else if (prenom.errors['majuscule']) {
+          <span class="text-danger">{{ prenom.errors['majuscule'] }}</span>
+          } }
+        </div>
+      </div>
+    </div>
+
+    <div
+      formArrayName="commentaires"
+      class="container-sm d-flex flex-column align-items-center gap-4 mx-0"
+    >
+      <h3 class="text-center">Commentaires</h3>
+      <div class="text-center">
+        <button class="btn btn-info" (click)="ajouterCommentaire()" type="button">
+          Ajouter un commentaire
+        </button>
+      </div>
+      <div class="row row-cols g-4 px-4 mx-0">
+        @for (commentaireGroup of commentaires.controls; track commentaireGroup) {
+        <div class="col">
+          <div [formGroupName]="$index" class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title text-nowrap">Commentaire {{ $index + 1 }}</h5>
+              <div class="mb-3">
+                <label class="form-label" [for]="'titre' + $index">Titre</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  [id]="'titre' + $index"
+                  formControlName="titre"
+                />
+                @if (commentaireGroup.get('titre')?.errors?.['required']) {
+                <span class="text-danger">Le titre est obligatoire</span>
+                }
+              </div>
+              <div class="mb-3">
+                <label class="form-label" [for]="'contenu' + $index">Contenu</label>
+                <textarea
+                  class="form-control"
+                  [id]="'contenu' + $index"
+                  formControlName="contenu"
+                ></textarea>
+                @if (commentaireGroup.get('contenu')?.errors?.['required']) {
+                <span class="text-danger">Le contenu est obligatoire</span>
+                }
+              </div>
+              <div class="mb-3">
+                <label class="form-label" [for]="'categorie' + $index">Catégorie</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  [id]="'categorie' + $index"
+                  formControlName="categorie"
+                />
+                @if (commentaireGroup.get('categorie')?.errors?.['required']) {
+                <span class="text-danger">La catégorie est obligatoire</span>
+                }
+              </div>
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="supprimerCommentaire($index)"
+                type="button"
+              >
+                Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <button class="btn btn-primary" [disabled]="commentForm.invalid">
+      Ajouter pour afficher les données
+    </button>
+  </div>
+</form>
+
+<div class="d-flex flex-column align-items-center gap-4 mt-4 mx-0">
+  <h3 class="text-center">Données Soumises</h3>
+  @if (submittedData.length === 0) {
+  <p class="alert alert-info my-0">Aucune donnée soumise pour le moment.</p>
+  } @else {
+  <div class="row row-cols g-4 px-4 mx-0">
+    @for (data of submittedData; track data) {
+    <div class="col">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ data.nom }} {{ data.prenom }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Commentaires:</h6>
+          @if (data.commentaires.length === 0) {
+          <p class="card-text">Aucun commentaire.</p>
+          } @else {
+          <ul class="list-group list-group-flush">
+            @for (comment of data.commentaires; track comment) {
+            <li class="list-group-item">
+              <strong>Titre:</strong> {{ comment.titre }}<br />
+              <strong>Contenu:</strong> {{ comment.contenu }}<br />
+              <strong>Catégorie:</strong> {{ comment.categorie }}
+            </li>
+            }
+          </ul>
+          }
+          <button
+            class="btn btn-danger btn-sm mt-3"
+            (click)="supprimerDonnee($index)"
+            type="button"
+          >
+            Supprimer ces données
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>
