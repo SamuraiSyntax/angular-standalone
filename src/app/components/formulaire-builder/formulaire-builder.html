@@ -1,76 +1,74 @@
-<h2 class="mb-3">Formulaire réactif (avec FormBuilder)</h2>
-<form [formGroup]="personneForm" (ngSubmit)="afficher()" class="needs-validation" novalidate>
-  <div class="mb-3">
-    <label for="nom" class="form-label">Nom</label>
-    <input
-      type="text"
-      id="nom"
-      formControlName="nom"
-      class="form-control"
-      [class.is-invalid]="nom.errors && nom.touched"
-    />
-    @if (nom.errors && nom.touched) {
-    <div class="invalid-feedback">
-      @if (nom.errors['required']) { Ce champ est obligatoire } @else {
-      {{ nom.errors['majuscule'] }}
+<h2>Formulaire réactif (avec FormBuilder)</h2>
+<form [formGroup]="personneForm" (ngSubmit)="afficher()">
+  <div class="form-group">
+    <label class="form-label" for="nom">Nom</label>
+    <input class="form-control" type="text" id="nom" formControlName="nom" />
+    @if (nom.errors) { @if (nom.errors['required']) {
+    <span>Ce champ est obligatoire</span>
+    } @else {
+    {{ nom.errors['majuscule'] }}
+    } }
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="prenom">Prénom</label>
+    <input class="form-control" type="text" id="prenom" formControlName="prenom" />
+    @if (prenom.errors) { @if (prenom.errors['required']) {
+    <span>Ce champ est obligatoire</span>
+    } @else { Ce champ doit commencer par une majuscule et contenir entre 3 et 30 lettres et espaces
+    } }
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="age">Âge</label>
+    <input class="form-control" type="number" id="age" formControlName="age" />
+    @if (age.errors) {
+    <span>Ce champ est obligatoire</span>
+    }
+  </div>
+  <div formGroupName="adresse">
+    <h3>Adresse</h3>
+    <div class="form-group">
+      <label class="form-label" for="ville">Ville</label>
+      <input class="form-control" type="text" id="ville" formControlName="ville" />
+      <!-- @if (ville.errors) {
+            <span>Ce champ est obligatoire</span>
+            } -->
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="codePostal">Code postal</label>
+      <input class="form-control" type="text" id="codePostal" formControlName="codePostal" />
+      <!-- @if (ville.errors) {
+            <span>Ce champ est obligatoire</span>
+            } -->
+    </div>
+  </div>
+  <div formArrayName="sports">
+    <h3>Sports</h3>
+    <div class="form-group">
+      <button class="btn btn-primary" (click)="ajouterSport()" type="button">
+        Ajouter un sport
+      </button>
+    </div>
+    @for (sport of sports.controls; track sport) {
+    <div class="form-group">
+      <label class="form-label" [for]="`sport${$index}`">Sport {{ $index + 1 }} :</label>
+      <div class="input-group">
+        <input class="form-control" type="text" [formControlName]="$index" [id]="`sport${$index}`" />
+        <button class="btn btn-danger" (click)="supprimerSport($index)" type="button">
+          Supprimer
+        </button>
+      </div>
+      @if (sport.errors) {
+      <span>Ce champ est obligatoire</span>
       }
     </div>
     }
   </div>
-  <div class="mb-3">
-    <label for="prenom" class="form-label">Prénom</label>
-    <input
-      type="text"
-      id="prenom"
-      formControlName="prenom"
-      class="form-control"
-      [class.is-invalid]="prenom.errors && prenom.touched"
-    />
-    @if (prenom.errors && prenom.touched) {
-    <div class="invalid-feedback">
-      @if (prenom.errors['required']) { Ce champ est obligatoire } @else { Ce champ doit commencer
-      par une majuscule et contenir entre 3 et 30 lettres et espaces }
-    </div>
-    }
-  </div>
-  <div class="mb-3">
-    <label for="age" class="form-label">Âge</label>
-    <input
-      type="number"
-      id="age"
-      formControlName="age"
-      class="form-control"
-      [class.is-invalid]="age.errors && age.touched"
-    />
-    @if (age.errors && age.touched) {
-    <div class="invalid-feedback">Ce champ est obligatoire</div>
-    }
-  </div>
-  <div formGroupName="adresse" class="border p-3 rounded mb-3">
-    <h5 class="mb-3">Adresse</h5>
-    <div class="mb-3">
-      <label for="ville" class="form-label">Ville</label>
-      <input type="text" id="ville" formControlName="ville" class="form-control" />
-      <!-- @if (ville.errors && ville.touched) {
-        <div class="invalid-feedback">Ce champ est obligatoire</div>
-      } -->
-    </div>
-    <div class="mb-3">
-      <label for="codePostal" class="form-label">Code postal</label>
-      <input type="text" id="codePostal" formControlName="codePostal" class="form-control" />
-      <!-- @if (codePostal.errors && codePostal.touched) {
-        <div class="invalid-feedback">Ce champ est obligatoire</div>
-      } -->
-    </div>
-  </div>
 
-  <div class="d-grid">
-    <button type="submit" class="btn btn-primary" [disabled]="personneForm.invalid">
-      Afficher
-    </button>
+  <div class="form-group">
+    <button class="btn btn-primary" [disabled]="personneForm.invalid">Afficher</button>
   </div>
 </form>
-<ul class="list-group mt-4">
+<ul class="list-group">
   @for (p of personnes; track $index) {
   <li class="list-group-item">{{ p.nom }} {{ p.prenom }}</li>
   }

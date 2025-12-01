@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Personne } from '../../models/personne';
 import { checkNomValidator } from '../../validators/string.validators';
 
@@ -21,7 +21,8 @@ export class FormulaireBuilderComponent {
       adresse: this.fb.group({
         ville: ['', Validators.required],
         codePostal: ['', Validators.required],
-      })
+      }),
+      sports: this.fb.array([])
     })
   }
 
@@ -34,6 +35,9 @@ export class FormulaireBuilderComponent {
   get age() {
     return this.personneForm.controls['age']
   }
+  get sports() {
+    return this.personneForm.controls['sports'] as FormArray
+  }
 
   afficher() {
     console.log(this.personneForm);
@@ -42,5 +46,13 @@ export class FormulaireBuilderComponent {
     console.log(this.personneForm.value);
     this.personnes.push(this.personneForm.value as Personne)
     this.personneForm.reset()
+    this.sports.clear()
+  }
+  ajouterSport() {
+    this.sports.push(this.fb.control(''))
+    // this.sports.push([''])
+  }
+  supprimerSport(index: number) {
+    this.sports.removeAt(index)
   }
 }
