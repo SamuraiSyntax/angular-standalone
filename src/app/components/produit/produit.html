@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header p-0 overflow-hidden">
+    <div class="input-group border-0 rounded-0">
+      <h5 class="card-title form-control mb-0 border-0 rounded-0">{{ produit().nom }}</h5>
+      <button class="btn btn-danger border-0 rounded-0" (click)="supprimerProduit()"><i class="fa-solid fa-trash"></i></button>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Prix: {{ produit().prix }} €</p>
+    <p class="card-text">Quantité en stock: {{ produit().quantite }}</p>
+  </div>
+  <div class="card-footer p-0 overflow-hidden">
+    <div class="input-group border-0 rounded-0">
+      <input
+        type="number"
+        class="form-control border-0 rounded-0"
+        placeholder="Quantité à acheter"
+        [(ngModel)]="quantiteAchetee"
+        (ngModelChange)="onQuantiteAcheteeChange()"
+        min="1"
+        [max]="produit().quantite"
+      />
+      <button
+        class="btn btn-success border-0 rounded-0"
+        (click)="acheterProduit()"
+        [disabled]="
+          quantiteAchetee() <= 0 ||
+          quantiteAchetee() > produit().quantite ||
+          produit().quantite === 0
+        "
+      >
+        Ajouter au panier
+      </button>
+    </div>
+  </div>
+</div>

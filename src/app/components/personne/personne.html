@@ -1,0 +1,60 @@
+<h2 class="text-primary my-5">Gestion de personnes</h2>
+<h3 class="text-primary my-5">Ajouter une nouvelle personne</h3>
+<form (ngSubmit)="ajouter()" #form="ngForm">
+  <div class="form-group">
+    <label class="form-label" for="nom">Nom</label>
+    <input
+      class="form-control"
+      type="text"
+      id="nom"
+      [(ngModel)]="personne.nom"
+      name="nom"
+      #nom="ngModel"
+      required
+    />
+    @if (nom.invalid && nom.dirty) {
+    <span> Ce champ est obligatoire </span>
+    }
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="prenom">Prénom</label>
+    <input
+      class="form-control"
+      type="text"
+      id="prenom"
+      [(ngModel)]="personne.prenom"
+      name="prenom"
+      required
+      #prenom="ngModel"
+    />
+    @if (prenom.invalid && prenom.dirty) {
+    <span> Ce champ est obligatoire </span>
+    }
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="age">Âge</label>
+    <input
+      class="form-control"
+      type="number"
+      id="age"
+      [(ngModel)]="personne.age"
+      name="age"
+      required
+      max="120"
+      #age="ngModel"
+    />
+    @if (age.invalid && age.dirty) {
+    <span> Ce champ est obligatoire et doit contenir une valeur inférieure à 120 </span>
+    }
+  </div>
+  <button class="btn btn-primary" [disabled]="form.invalid">Afficher</button>
+</form>
+<h3 class="text-primary my-5">Liste des personnes</h3>
+<ul class="list-group">
+  @for (p of personnes; track $index) {
+  <li class="list-group-item d-flex input-group p-0 overflow-hidden">
+    <span class="flex-grow-1 px-3 py-2">{{ p.nom }} {{ p.prenom }} ({{ p.age }} ans)</span>
+    <button class="flex-shrink-0 btn btn-danger rounded-0" (click)="supprimer(p)">Supprimer</button>
+  </li>
+  }
+</ul>

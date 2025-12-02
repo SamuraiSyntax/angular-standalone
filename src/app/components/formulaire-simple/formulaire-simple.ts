@@ -9,7 +9,11 @@ import { Personne } from '../../models/personne';
   styleUrl: './formulaire-simple.css',
 })
 export class FormulaireSimpleComponent {
-  personne: Personne = {};
+  personne: Personne = {
+    nom: '',
+    prenom: '',
+    age: 0,
+  };
   personnes: Personne[] = [];
 
   onSubmit(formulaire: NgForm): void {
@@ -17,7 +21,11 @@ export class FormulaireSimpleComponent {
       const formData: Personne = { ...this.personne };
       this.personnes.push(formData);
       console.log('Données du formulaire :', formData);
-      this.personne = {};
+      this.personne = {
+        nom: '',
+        prenom: '',
+        age: 0,
+      };
       formulaire.reset();
     }
   }

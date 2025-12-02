@@ -1,0 +1,41 @@
+<textarea class="form-control mb-3" [(ngModel)]="textOutput" rows="5" cols="50"></textarea>
+<div class="d-flex flex-column gap-2 align-items-center">
+  <!-- Première rangée -->
+  <div class="d-flex gap-1 justify-content-center">
+    @for (lettre of lettres[0] ; track lettre) {
+    <app-touche [value]="lettre" (toucheClick)="onToucheClick(lettre)"></app-touche>
+    }
+  </div>
+
+  <!-- Conteneur pour les deuxième et troisième rangées et la touche Enter -->
+  <div class="d-flex gap-1">
+    <div class="d-flex flex-column gap-1">
+      <!-- Deuxième rangée -->
+      <div class="d-flex gap-1 justify-content-center">
+        @for (lettre of lettres[1] ; track lettre) {
+        <app-touche [value]="lettre" (toucheClick)="onToucheClick(lettre)"></app-touche>
+        }
+      </div>
+      <!-- Troisième rangée -->
+      <div class="d-flex gap-1 justify-content-center">
+        @for (lettre of lettres[2] ; track lettre) {
+        <app-touche [value]="lettre" (toucheClick)="onToucheClick(lettre)"></app-touche>
+        }
+      </div>
+    </div>
+    <!-- Touche Enter -->
+    <app-touche [value]="'Enter'" (toucheClick)="onToucheClick('Enter')" class="align-self-stretch"></app-touche>
+  </div>
+
+  <!-- Rangée de la barre d'espace -->
+  <div
+    [ngClass]="{
+      'w-100': lettres[3][0] === ' ' && lettres[3].length === 1,
+      'd-flex gap-1 justify-content-center': !(lettres[3][0] === ' ' && lettres[3].length === 1)
+    }"
+  >
+    @for (lettre of lettres[3] ; track lettre) {
+    <app-touche [value]="lettre" (toucheClick)="onToucheClick(lettre)"></app-touche>
+    }
+  </div>
+</div>

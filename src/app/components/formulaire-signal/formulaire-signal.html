@@ -1,0 +1,18 @@
+<h2>Signal forms</h2>
+<form (ngSubmit)="afficher()">
+  <div class="form-group">
+    <label class="form-label" for="nom">Nom</label>
+    <input class="form-control" type="text" id="nom" [field]="personneForm.nom" />
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="prenom">Prénom</label>
+    <input class="form-control" type="text" id="prenom" [field]="personneForm.prenom" />
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="age">Âge</label>
+    <input class="form-control" type="number" id="age" [field]="personneForm.age" />
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary">Afficher</button>
+  </div>
+</form>

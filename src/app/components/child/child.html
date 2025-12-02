@@ -1,0 +1,5 @@
+<div class="input-group">
+  <span class="input-group-text w-25">{{ nom() }}</span>
+  <input class="form-control" type="number" [(ngModel)]="note" />
+  <button class="btn btn-primary" (click)="envoyer()" [disabled]="isDisabled">Envoyer au parent</button>
+</div>

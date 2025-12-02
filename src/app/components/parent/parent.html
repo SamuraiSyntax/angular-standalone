@@ -1,0 +1,6 @@
+<h2 class="text-primary my-5">Moyenne : {{ moyenne }}</h2>
+@for (nom of noms; track $index) {
+<div class="mb-3">
+    <app-child [nom]="nom" (sendNote)="calculerMoyenne($event)" />
+</div>
+}

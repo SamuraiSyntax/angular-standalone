@@ -1,0 +1,9 @@
+<button
+  class="btn btn-outline-primary d-flex justify-content-center align-items-center fs-5 fw-bold"
+  [ngClass]="{'w-100': value === ' '}" 
+  [style.width.px]="value === ' ' ? null : 40"
+  [style.height.px]="value === 'Enter' ? 80 : 40"
+  (click)="onClick()"
+>
+  {{ value }}
+</button>
