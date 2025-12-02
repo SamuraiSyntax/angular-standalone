@@ -2,7 +2,7 @@
   <h2 class="text-center">Liste des produits</h2>
 
   <div class="alert alert-info text-center" role="alert">
-    Total du panier: {{ cartTotal() | currency:'EUR' }}
+    Total du panier: {{ cartTotal() | currency : 'EUR' }}
   </div>
 
   <div class="row">
@@ -30,22 +30,15 @@
           />
         </div>
         <div class="card-footer text-center p-0 overflow-hidden">
-          <button class="btn btn-primary w-100 rounded-0" (click)="ajouterProduit()">Ajouter</button>
+          <button class="btn btn-primary w-100 rounded-0" (click)="ajouterProduit()">
+            Ajouter
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row row-cols g-4 justify-content-start align-items-center flex-wrap">
-    @for (produit of produits(); track produit.nom) {
-    <div class="col-auto">
-      <app-produit
-        [produit]="produit"
-        (produitAchete)="onProduitAchete($event)"
-        (quantiteChoisieChangee)="onQuantiteChoisieChange($event)"
-        (produitSupprime)="onProduitSupprime($event)"
-      ></app-produit>
-    </div>
-    }
+  <div class="row row-cols-auto g-4 justify-content-center align-items-center flex-wrap">
+    <ng-container #productContainer></ng-container>
   </div>
 </div>

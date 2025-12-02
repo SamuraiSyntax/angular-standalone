@@ -26,13 +26,9 @@ export class ProduitComponent {
     const produitActuel = this.produit();
     const quantite = this.quantiteAchetee();
 
-    if (quantite > 0 && quantite <= produitActuel.quantite) {
-      this.produitAchete.emit({ nom: produitActuel.nom, quantiteAchetee: quantite });
-      this.quantiteAchetee.set(0);
-      this.onQuantiteAcheteeChange();
-    } else {
-      alert('Veuillez entrer une quantité valide et disponible en stock.');
-    }
+    this.produitAchete.emit({ nom: produitActuel.nom, quantiteAchetee: quantite });
+    this.quantiteAchetee.set(0);
+    this.onQuantiteAcheteeChange();
   }
 
   supprimerProduit() {
