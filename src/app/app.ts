@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MenuComponent } from './components/menu/menu';
-import { HeaderComponent } from './components/header/header';
+import { MenuComponent } from './components/shared-module/menu/menu'; 
+import { HeaderComponent } from './components/shared-module/header/header';
 
 @Component({
   selector: 'app-root',

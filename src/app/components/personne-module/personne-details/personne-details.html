@@ -1,0 +1,15 @@
+<h2 class="text-primary my-5">Détails de la personne</h2>
+
+@if (personne()) {
+<app-personne-form
+  [personne]="personne()!"
+  [titre]="'Modifier la personne'"
+  (save)="enregistrer($event)"
+  (cancel)="annuler()"
+></app-personne-form>
+} @else {
+<div class="d-flex flex-column align-items-center justify-content-center gap-3">
+  <strong role="status">Chargement des détails de la personne...</strong>
+  <div class="spinner-border mx-auto" aria-hidden="true"></div>
+</div>
+}
