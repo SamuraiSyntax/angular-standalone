@@ -1,0 +1,41 @@
+<div class="d-flex flex-column align-items-center justify-content-center gap-3">
+  <h1>Tchat</h1>
+  <div class="d-flex justify-content-center align-items-center m-0 p-0">
+    <button class="btn btn-primary" type="button" (click)="generateParticipants()">
+      Generer entre 2-8 participants
+    </button>
+  </div>
+
+  <div class="input-group" style="max-width: 50vw; width: 50vw;">
+    <select class="form-select" [(ngModel)]="participantToKickId">
+      <option [ngValue]="null" disabled>Sélectionner un participant à kicker</option>
+      @for (participant of participants; track participant.id) {
+        <option [ngValue]="participant.id">{{ participant.name }}</option>
+      }
+    </select>
+    <button class="btn btn-warning" type="button" (click)="kickSelectedParticipant()" [disabled]="participantToKickId === null">
+      Kicker le sélectionné
+    </button>
+  </div>
+
+  <div class="input-group" style="max-width: 50vw; width: 50vw;">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Nom du participant"
+      [(ngModel)]="newParticipantName"
+      (keyup.enter)="addParticipant()"
+    />
+    <button class="btn btn-primary" type="button" (click)="addParticipant()">
+      Ajouter participant
+    </button>
+  </div>
+
+  <div class="row row-cols-auto justify-content-center g-4 m-0 w-100">
+    @for (participant of participants; track participant.id) {
+    <div class="col-auto d-flex justify-content-center align-items-center m-0 p-0">
+      <app-participant [name]="participant.name" [id]="participant.id"></app-participant>
+    </div>
+    }
+  </div>
+</div>

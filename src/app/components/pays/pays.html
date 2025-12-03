@@ -1,0 +1,31 @@
+<div class="container d-flex flex-column align-items-center justify-content-center gap-3">
+  <h1 class="text-center m-0">Pays - Villes</h1>
+  <p class="text-center m-0">Voici la liste des pays avec leurs villes et populations.</p>
+  <div class="d-flex flex-column align-items-center justify-content-center gap-1">
+    <p class="text-center m-0">Trier par population :</p>
+    <div class="btn-group btn-group-sm btn-group-toggle mx-auto" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" (click)="trierParPopulationAscendant()">
+        <label class="btn btn-outline-primary" for="btnradio1">Plus petit au plus grand</label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" (click)="trierParPopulationDescendant()">
+        <label class="btn btn-outline-primary" for="btnradio2">Plus grand au plus petit</label>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-auto justify-content-center g-4 m-0">
+  @for(elt of villes; track elt; let i = $index) {
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="m-0">{{ elt.nom }}</h5>
+      </div>
+      <div class="card-body">
+        <app-ville [(ville)]="elt.nom"></app-ville>
+      </div>
+      <div class="card-footer">
+        <p class="m-0">Population : {{ formatPopulation(elt.population) }}</p>
+      </div>
+    </div>
+  </div>
+  }
+</div>

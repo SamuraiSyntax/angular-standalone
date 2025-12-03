@@ -1,60 +1,94 @@
 <h2 class="text-primary my-5">Gestion de personnes</h2>
-<h3 class="text-primary my-5">Ajouter une nouvelle personne</h3>
+
 <form (ngSubmit)="ajouter()" #form="ngForm">
-  <div class="form-group">
-    <label class="form-label" for="nom">Nom</label>
-    <input
-      class="form-control"
-      type="text"
-      id="nom"
-      [(ngModel)]="personne.nom"
-      name="nom"
-      #nom="ngModel"
-      required
-    />
-    @if (nom.invalid && nom.dirty) {
-    <span> Ce champ est obligatoire </span>
-    }
+  <div class="card overflow-hidden w-100 mx-auto" style="max-width: fit-content">
+    <div class="card-header">
+      <h3 class="m-0">Nouvelle personne</h3>
+    </div>
+
+    <div class="card-body d-flex flex-column gap-3">
+      <div class="input-group">
+        <label class="input-group-text w-25" for="nom">Nom</label>
+        <input
+          class="form-control"
+          type="text"
+          id="nom"
+          [(ngModel)]="personne.nom"
+          name="nom"
+          #nom="ngModel"
+          required
+        />
+        @if (nom.invalid && nom.dirty) {
+        <span> Ce champ est obligatoire </span>
+        }
+      </div>
+      <div class="input-group">
+        <label class="input-group-text w-25" for="prenom">Prénom</label>
+        <input
+          class="form-control"
+          type="text"
+          id="prenom"
+          [(ngModel)]="personne.prenom"
+          name="prenom"
+          required
+          #prenom="ngModel"
+        />
+        @if (prenom.invalid && prenom.dirty) {
+        <span> Ce champ est obligatoire </span>
+        }
+      </div>
+      <div class="input-group">
+        <label class="input-group-text w-25" for="age">Âge</label>
+        <input
+          class="form-control"
+          type="number"
+          id="age"
+          [(ngModel)]="personne.age"
+          name="age"
+          required
+          max="120"
+          #age="ngModel"
+        />
+        @if (age.invalid && age.dirty) {
+        <span> Ce champ est obligatoire et doit contenir une valeur inférieure à 120 </span>
+        }
+      </div>
+    </div>
+
+    <button class="btn btn-primary rounded-0" [disabled]="form.invalid">Ajouter</button>
   </div>
-  <div class="form-group">
-    <label class="form-label" for="prenom">Prénom</label>
-    <input
-      class="form-control"
-      type="text"
-      id="prenom"
-      [(ngModel)]="personne.prenom"
-      name="prenom"
-      required
-      #prenom="ngModel"
-    />
-    @if (prenom.invalid && prenom.dirty) {
-    <span> Ce champ est obligatoire </span>
-    }
-  </div>
-  <div class="form-group">
-    <label class="form-label" for="age">Âge</label>
-    <input
-      class="form-control"
-      type="number"
-      id="age"
-      [(ngModel)]="personne.age"
-      name="age"
-      required
-      max="120"
-      #age="ngModel"
-    />
-    @if (age.invalid && age.dirty) {
-    <span> Ce champ est obligatoire et doit contenir une valeur inférieure à 120 </span>
-    }
-  </div>
-  <button class="btn btn-primary" [disabled]="form.invalid">Afficher</button>
 </form>
+
 <h3 class="text-primary my-5">Liste des personnes</h3>
-<ul class="list-group">
-  @for (p of personnes; track $index) {
-  <li class="list-group-item d-flex input-group p-0 overflow-hidden">
-    <span class="flex-grow-1 px-3 py-2">{{ p.nom }} {{ p.prenom }} ({{ p.age }} ans)</span>
-    <button class="flex-shrink-0 btn btn-danger rounded-0" (click)="supprimer(p)">Supprimer</button>
-  </li>
+<div class="row row-cols-auto g-3">
+  @for (p of personnes(); track $index) {
+  <div class="col">
+    <div
+      class="card h-100 overflow-hidden w-100 mx-auto"
+      style="min-width: 12vw; max-width: fit-content"
+    >
+      <div class="card-header d-flex justify-content-between align-items-center p-0 input-group">
+        <h5 class="px-3 py-2 m-0 flex-grow-1">{{ p.prenom }} {{ p.nom }}</h5>
+        <button
+          class="btn btn-danger form-control rounded-0 flex-shrink-0 "
+          style="min-width: fit-content; max-width: 30px"
+          (click)="supprimer(p.id!)"
+        >
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+      <div class="card-body d-flex flex-column">
+        <p class="card-text">ID: {{ p.id }}</p>
+        <p class="card-text">Âge: {{ p.age }} ans</p>
+      </div>
+      <div
+        class="card-footer d-flex justify-content-between align-items-center p-0 input-group text-nowrap"
+      >
+        <button class="btn btn-success form-control rounded-0" (click)="goToDetails(p.id!)">
+          Détails
+        </button>
+      </div>
+    </div>
+  </div>
   }
-</ul>
+</div>

@@ -42,26 +42,21 @@ class MockWebSocket {
 // --- Fin de la simulation WebSocket ---
 
 @Injectable({
-  providedIn: 'root', // Rend le service disponible dans toute l'application
+  providedIn: 'root',
 })
 export class ChatService implements OnDestroy {
-  // Le ReplaySubject stockera TOUS les messages.
-  // Quand un nouvel abonné arrive, il recevra TOUS les messages précédents.
   private chatMessagesSubject = new ReplaySubject<ChatMessage>();
 
-  // Observable public pour que les composants puissent s'abonner aux messages
   public chatMessages$: Observable<ChatMessage> = this.chatMessagesSubject.asObservable();
 
-  // Simule la connexion WebSocket
   private webSocket: MockWebSocket;
-  private destroy$ = new Subject<void>(); // Pour gérer la désinscription lors de la destruction du service
+  private destroy$ = new Subject<void>();
 
   constructor() {
     console.log('ChatService initialisé.');
     this.webSocket = new MockWebSocket();
     this.connectToWebSocket();
 
-    // Simuler quelques messages initiaux via le "serveur"
     this.webSocket.simulateIncomingMessage({
       sender: 'Bot',
       message: 'Bienvenue dans le chat !',
@@ -79,13 +74,9 @@ export class ChatService implements OnDestroy {
     });
   }
 
-  /**
-   * Établit la connexion au WebSocket et écoute les messages entrants.
-   */
   private connectToWebSocket(): void {
-    // S'abonne aux messages du WebSocket et les passe au ReplaySubject
     this.webSocket.messages$
-      .pipe(takeUntil(this.destroy$)) // Se désinscrit quand le service est détruit
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (message) => {
           console.log(
@@ -98,17 +89,13 @@ export class ChatService implements OnDestroy {
       );
   }
 
-  /**
-   * Envoie un nouveau message au chat via le WebSocket.
-   * Le message sera ensuite reçu par le service via le WebSocket et diffusé par le ReplaySubject.
-   */
   public sendMessage(sender: string, message: string): void {
     const newMessage: ChatMessage = {
       sender,
       message,
       timestamp: new Date(),
     };
-    this.webSocket.send(newMessage); // Envoie le message au "serveur" WebSocket
+    this.webSocket.send(newMessage);
   }
 
   /**
@@ -132,10 +119,7 @@ export class ChatService implements OnDestroy {
     );
     this.sendMessage('Système', `${memberName} a rejoint le chat.`);
   }
-
-  /**
-   * Nettoie les ressources lors de la destruction du service.
-   */
+  
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

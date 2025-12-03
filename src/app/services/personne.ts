@@ -1,29 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Personne } from '../models/personne';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PersonneService {
-  personnes: Personne[];
-  constructor() {
-    this.personnes = [
-      { nom: 'Wick', prenom: 'John', age: 45 },
-      { nom: 'Dalton', prenom: 'Jack', age: 55 },
-      { nom: 'Maggio', prenom: 'Candice', age: 27 },
-      { nom: 'Linus', prenom: 'Sophie', age: 67 },
-    ];
+  private url = `http://localhost:8080/ws/personnes`;
+  private personnes: Personne[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  findAll(): Observable<Personne[]> {
+    return this.http.get<Personne[]>(this.url);
+  }
+  
+  findById(id: number): Observable<Personne> {
+    return this.http.get<Personne>(`${this.url}/${id}`);
+  }
+  
+  put(p: Personne): Observable<Personne> {
+    return this.http.put<Personne>(`${this.url}/${p.id}`, p);
   }
 
-  findAll() {
-    return this.personnes;
+  save(p: Personne): Observable<Personne> {
+    return this.http.post<Personne>(this.url, p);
   }
 
-  delete(p: Personne) {
-    this.personnes = this.personnes.filter((personne) => personne !== p);
-  }
-
-  save(p: Personne) {
-    this.personnes.push(p);
+  remove(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
   }
 }

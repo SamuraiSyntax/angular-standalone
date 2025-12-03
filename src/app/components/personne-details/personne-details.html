@@ -1,0 +1,91 @@
+<h2 class="text-primary my-5">Détails de la personne</h2>
+
+@if (personne()) {
+<form (ngSubmit)="enregistrer()" #form="ngForm">
+  <div class="card overflow-hidden w-100 mx-auto" style="max-width: fit-content">
+    <div class="card-header">
+      <h3 class="card-title m-0">Modifier la personne</h3>
+    </div>
+    <div class="card-body d-flex flex-column gap-3">
+      <div class="input-group">
+        <label
+          class="input-group-text w-25 {{ prenom.invalid && prenom.dirty ? 'text-danger' : '' }}"
+          for="prenom"
+        >
+          Prénom
+        </label>
+        <input
+          class="form-control flex-grow-1 {{ prenom.invalid && prenom.dirty ? 'is-invalid' : '' }}"
+          type="text"
+          id="prenom"
+          [(ngModel)]="personne()!.prenom"
+          name="prenom"
+          required
+          #prenom="ngModel"
+        />
+      </div>
+      @if (prenom.invalid && prenom.dirty) {
+      <span class="text-danger text-center mx-auto" style="max-width: 275px">
+        Ce champ est obligatoire
+      </span>
+      }
+      <div class="input-group">
+        <label
+          class="input-group-text w-25 {{ nom.invalid && nom.dirty ? 'text-danger' : '' }}"
+          for="nom"
+          >Nom</label
+        >
+        <input
+          class="form-control flex-grow-1 {{ nom.invalid && nom.dirty ? 'is-invalid' : '' }}"
+          type="text"
+          id="nom"
+          [(ngModel)]="personne()!.nom"
+          name="nom"
+          #nom="ngModel"
+          required
+        />
+      </div>
+      @if (nom.invalid && nom.dirty) {
+      <span class="text-danger text-center mx-auto" style="max-width: 275px">
+        Ce champ est obligatoire
+      </span>
+      }
+      <div class="input-group">
+        <label
+          class="input-group-text w-25 {{ age.invalid && age.dirty ? 'text-danger' : '' }}"
+          for="age"
+          >Âge</label
+        >
+        <input
+          class="form-control flex-grow-1 {{ age.invalid && age.dirty ? 'is-invalid' : '' }}"
+          type="number"
+          id="age"
+          [(ngModel)]="personne()!.age"
+          name="age"
+          required
+          max="120"
+          #age="ngModel"
+        />
+      </div>
+      @if (age.invalid && age.dirty) {
+      <span class="text-danger text-center mx-auto" style="max-width: 275px">
+        Ce champ est obligatoire et doit contenir une valeur inférieure à 120
+      </span>
+      }
+    </div>
+    <div
+      class="card-footer d-flex justify-content-between align-items-center p-0 input-group text-nowrap"
+    >
+      <button class="btn btn-primary flex-grow-1 rounded-0" [disabled]="form.invalid">
+        Enregistrer
+      </button>
+      <button class="btn btn-danger flex-grow-1 rounded-0" (click)="annuler()">Annuler</button>
+    </div>
+  </div>
+</form>
+} @else {
+<div class="d-flex flex-column align-items-center justify-content-center gap-3">
+  <strong role="status">Chargement des détails de la personne...</strong>
+  <div class="spinner-border mx-auto" aria-hidden="true"></div>
+</div>
+}

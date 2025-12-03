@@ -22,12 +22,20 @@ import { PrimeurComponent } from './components/primeur/primeur';
 import { ParentComponent } from './components/parent/parent';
 import { Clavier } from './components/clavier/clavier';
 import { PereComponent } from './components/pere/pere';
+import { PaysComponent } from './components/pays/pays';
+import { VilleComponent } from './components/ville/ville';
+import { ContainerComponent } from './components/container/container';
+import { TchatComponent } from './components/tchat/tchat';
+import { PersonneDetailsComponent } from './components/personne-details/personne-details';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Accueil' },
   { path: 'adresse', component: AdresseComponent, title: 'Adresse' },
   { path: 'address', redirectTo: '/adresse' },
+  { path: 'pays', component: PaysComponent, title: 'Pays - Villes' },
+  { path: 'ville', component: VilleComponent, title: 'Ville' },
   { path: 'personne', component: PersonneComponent, title: 'Personne' },
+  { path: 'personne/:id', component: PersonneDetailsComponent, title: 'Détails Personne' },
   { path: 'stagiaire/:nom/:prenom', component: StagiereComponent, title: 'Stagiaire' },
   { path: 'calcul/:op', component: CalculComponent, title: 'Calcul' },
   { path: 'tableau/:indice', component: Tableau, title: 'Tableau' },
@@ -35,6 +43,7 @@ export const routes: Routes = [
   { path: 'subject', component: SubjectComponent, title: 'Subject' },
   { path: 'computed', component: ComputedComponent, title: 'Computed' },
   { path: 'chat', component: ChatComponent, title: 'Chat' },
+  { path: 'tchat', component: TchatComponent, title: 'Tchat' },
   { path: 'formulaire-simple', component: FormulaireSimpleComponent, title: 'Formulaire Simple' },
   { path: 'formulaire-reactif', component: FormulaireReactifComponent, title: 'Formulaire Reactif' },
   { path: 'formulaire-builder', component: FormulaireBuilderComponent, title: 'Formulaire Builder' },
@@ -42,6 +51,7 @@ export const routes: Routes = [
   { path: 'comment', component: CommentComponent, title: 'Comment' },
   { path: 'calculette', component: CalculetteComponent, title: 'Calculette' },
   { path: 'pere', component: PereComponent, title: 'Père/fils' },
+  { path: 'container', component: ContainerComponent, title: 'Container' },
   { path: 'about', component: AboutComponent, title: 'À propos' },
   { path: 'primeur', component: PrimeurComponent, title: 'Primeur' },
     { path: 'parent', component: ParentComponent, title: 'Parent' },

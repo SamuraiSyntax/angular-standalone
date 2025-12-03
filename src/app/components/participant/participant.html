@@ -1,0 +1,54 @@
+<div class="card rounded-0">
+  <div class="card-header">{{ name }} (ID: {{ id }})</div>
+  <div class="card-body">
+    <div
+      #messagesContainer
+      class="messages h-100 overflow-y-auto border border-secondary px-3 py-2"
+      style="min-height: 100px; max-height: 300px"
+    >
+      @for (msg of receivedMessages; track $index) {
+      <div
+        class="d-flex flex-column mb-2"
+        [ngClass]="{
+          'justify-content-end align-items-end': msg.isSelf,
+          'justify-content-start align-items-start': !msg.isSelf
+        }"
+      >
+        <div class="text-muted">
+          {{ msg.sender }}:
+          <span class="text-secondary">{{ msg.timestamp | date : 'HH:mm' }}</span>
+        </div>
+        <div
+          class="p-2 rounded"
+          [ngClass]="{
+            'text-primary-emphasis bg-primary-subtle': msg.isSelf && msg.sender !== 'Système',
+            'text-light-emphasis bg-light-subtle': !msg.isSelf && msg.sender !== 'Système',
+            'text-success-emphasis bg-success-subtle': msg.sender === 'Système'
+          }"
+        >
+          {{ msg.content }}
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Votre message..."
+        [(ngModel)]="message"
+        (keyup.enter)="sendMessage()"
+      />
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        (click)="sendMessage()"
+        [disabled]="!message"
+      >
+        Envoyer
+      </button>
+    </div>
+  </div>
+</div>

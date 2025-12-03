@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-primeur',
   standalone: true,
-  imports: [CommonModule, ProduitComponent, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './primeur.html',
   styleUrl: './primeur.css',
 })

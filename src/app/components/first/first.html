@@ -1,0 +1,18 @@
+<div class="card shadow-sm">
+  <div class="card-header bg-primary text-white text-center">
+    <h3 class="card-title mb-0">Émetteur</h3>
+  </div>
+  <div class="card-body d-flex flex-column align-items-center gap-3">
+    <div class="input-group">
+      <textarea
+        class="form-control"
+        placeholder="Votre message"
+        rows="auto"
+        [(ngModel)]="msg"
+      ></textarea>
+      <button class="btn btn-primary" (click)="envoyer()">
+        <i class="fa-solid fa-paper-plane me-2"></i>Envoyer
+      </button>
+    </div>
+  </div>
+</div>
