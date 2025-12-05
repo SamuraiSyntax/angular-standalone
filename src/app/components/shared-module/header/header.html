@@ -5,8 +5,24 @@
     }}"
     href="/"
   >
-    <h1 class="fs-4 m-0">{{ title.toUpperCase() }}</h1>
     <i class="fa-brands fa-angular text-danger fs-4"></i>
+    <h1 class="fs-4 m-0">{{ title.toUpperCase() }}</h1>
+    <button
+      class="btn btn-danger p-2 d-flex align-items-center"
+      (click)="logout()"
+      [hidden]="!isConnected()"
+      [class.d-none]="!isConnected()"
+    >
+      Se déconnecter
+    </button>
+    <a
+      class="btn btn-danger p-2 d-flex align-items-center"
+      [hidden]="isConnected()"
+      [routerLink]="['/auth']"
+      [class.d-none]="isConnected()"
+    >
+      Se connecter
+    </a>
   </a>
   <button
     class="position-fixed top-0 end-0 me-2 mt-2 float-end btn btn-primary p-2 d-flex align-items-center"

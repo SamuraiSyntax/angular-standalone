@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { GetCharPipe } from '../../pipes/get-char-pipe';
 import { EvenValuePipe } from '../../pipes/even-value-pipe';
 import { Router, RouterModule } from '@angular/router';
+import { CompteurComponent } from '../intteraction-module/compteur/compteur';
 
 @Component({
   selector: 'app-about',
-  imports: [CommonModule, GetCharPipe, EvenValuePipe, RouterModule],
+  imports: [CommonModule, GetCharPipe, EvenValuePipe, RouterModule, CompteurComponent],
   templateUrl: './about.html',
   styleUrl: './about.css',
 })
@@ -37,7 +38,7 @@ export class AboutComponent {
   codePostal = '31000';
   ville = 'Toulouse';
   aujourdhui = new Date();
-  
+
   constructor(private router: Router) {
     this.currentRoute = this.router.url;
   }

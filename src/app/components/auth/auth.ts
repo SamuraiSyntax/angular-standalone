@@ -4,34 +4,42 @@ import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { environment } from '../../../environments/environment.development';
 import { User } from '../../models/user';
+import { AuthService } from '../../services/auth';
+import { LoginLogoutService } from '../../services/login-logout';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './auth.html',
-  host: { class: 'd-block w-100' },
+  host: { class: 'd-flex justify-content-center align-items-center w-100' },
 })
 export class AuthComponent {
-  user: User = { username: '', password: '' };
-  users: User[] = [
-    { username: 'user', password: 'user' },
-    { username: 'admin', password: 'admin' },
-    { username: 'sadmin', password: 'sadmin' },
-  ];
-  erreur = signal<string | null>(null)
-  private backendUrl: string = environment.BACKEND_URL;
+  erreur = signal<string | null>(null);
+  user: User = { username: '', password: '', grantType: 'PASSWORD' };
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private logService: LoginLogoutService
+  ) {}
 
-  login() {
-    if (
-      this.users.some((u) => u.password == this.user.password && u.username == this.user.username)
-    ) {
-      localStorage.setItem('user', JSON.stringify(this.user));
-      this.router.navigateByUrl('/personne');
-    } else {
-      this.erreur.set('Identifiants incorrects');
-    }
+  seConnecter() {
+    this.authService.findByUsernameAndPassword(this.user).subscribe({
+      next: (res) => {
+        console.log('Authentification réussie. Réponse:', res);
+        localStorage.setItem('tokens', JSON.stringify(res));
+        localStorage.setItem('user', JSON.stringify(this.user));
+        console.log('Tokens et utilisateur stockés dans localStorage.');
+        this.logService.isConnected(true);
+        console.log('Appel de isConnected(true).');
+        this.router.navigateByUrl('/personne');
+        console.log('Navigation vers /personne.');
+      },
+      error: (err) => {
+        console.log("Erreur d'authentification:", err);
+        this.erreur.set('Identifiants incorrects');
+      },
+    });
   }
 }
